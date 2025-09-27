@@ -1,4 +1,4 @@
-./run_rmi.sh > /dev/null
+../Server/run_rmi.sh > /dev/null
 
 # echo "Edit file run_middleware.sh to include instructions for launching the middleware"
 echo '  $1 - server name of Cars'

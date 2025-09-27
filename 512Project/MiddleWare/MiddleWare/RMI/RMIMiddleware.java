@@ -502,33 +502,34 @@ public class RMIMiddleware implements IResourceManager
      * @return Success
      */
     public boolean bundle(int customerID, Vector<String> flightNumbers, String location, boolean car, boolean room) throws RemoteException {
-        System.out.println("DEBUG: bundle called - Customer: " + customerID + ", Flights: " + flightNumbers + ", Location: " + location + ", Car: " + car + ", Room: " + room);
+        System.out.println("DEBUG: bundle called - Customer: " + customerID + ", Flights: " + flightNumbers
+                + ", Location: " + location + ", Car: " + car + ", Room: " + room);
         for (String flightNumber : flightNumbers) {
             int flightNumberInt = Integer.parseInt(flightNumber);
-            if (m_Flights_available.containsKey(flightNumber) && m_Flights_available.get(flightNumber) > 1) {
-                customerManager.reserveFlight(customerID,flightNumberInt);
+            if (m_Flights_available.containsKey(flightNumberInt) && m_Flights_available.get(flightNumberInt) > 0) {
+                customerManager.reserveFlight(customerID, flightNumberInt);
                 m_Flights_available.merge(flightNumberInt, -1, Integer::sum);
-            }
-            else{
+            } 
+            else {
                 System.out.println("DEBUG: bundle failed - flight " + flightNumber + " not available");
                 return false;
             }
         }
         if (car) {
-            if (m_Cars_available.containsKey(location) && m_Cars_available.get(location) > 1) {
-                customerManager.reserveCar(customerID,location);
+            if (m_Cars_available.containsKey(location) && m_Cars_available.get(location) > 0) {
+                customerManager.reserveCar(customerID, location);
                 m_Cars_available.merge(location, -1, Integer::sum);
-            }
-            else{
+            } 
+            else {
                 System.out.println("DEBUG: bundle failed - car at " + location + " not available");
                 return false;
             }
         }
         if (room) {
-            if (m_Rooms_available.containsKey(location) && m_Rooms_available.get(location) > 1) {
-                customerManager.reserveRoom(customerID,location);
+            if (m_Rooms_available.containsKey(location) && m_Rooms_available.get(location) > 0) {
+                customerManager.reserveRoom(customerID, location);
                 m_Rooms_available.merge(location, -1, Integer::sum);
-            }
+            } 
             else {
                 System.out.println("DEBUG: bundle failed - room at " + location + " not available");
                 return false;

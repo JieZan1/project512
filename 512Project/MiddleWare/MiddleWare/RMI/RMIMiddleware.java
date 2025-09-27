@@ -35,9 +35,9 @@ public class RMIMiddleware implements IResourceManager
 	private static String s_roomRM = "Room";
 	private static String s_flightRM = "Flights";
 
-	private IResourceManager carRM;
-	private IResourceManager roomRM ;
-	private IResourceManager flightRM;
+	public IResourceManager carRM;
+	public IResourceManager roomRM ;
+	public IResourceManager flightRM;
 
 //	private int nextCustomerId = 1000;
     private CustomerManager customerManager;

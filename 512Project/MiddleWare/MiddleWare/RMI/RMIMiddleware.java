@@ -35,9 +35,9 @@ public class RMIMiddleware implements IResourceManager
 	private static String s_roomRM = "Room";
 	private static String s_flightRM = "Flights";
 
-	private static IResourceManager carRM;
-	private static IResourceManager roomRM ;
-	private static IResourceManager flightRM;
+	private IResourceManager carRM;
+	private IResourceManager roomRM ;
+	private IResourceManager flightRM;
 
 //	private int nextCustomerId = 1000;
     private CustomerManager customerManager;
@@ -64,9 +64,9 @@ public class RMIMiddleware implements IResourceManager
 			RMIMiddleware server = new RMIMiddleware();
 
 			//Get the RMs from the RM servers.
-            flightRM = server.connectServer(s_server_flight, s_serverPort, s_flightRM);
-            carRM = server.connectServer(s_server_car, s_serverPort, s_carRM);
-            roomRM = server.connectServer(s_server_room, s_serverPort, s_roomRM);
+            server.flightRM = server.connectServer(s_server_flight, s_serverPort, s_flightRM);
+            server.carRM = server.connectServer(s_server_car, s_serverPort, s_carRM);
+            server.roomRM = server.connectServer(s_server_room, s_serverPort, s_roomRM);
             System.out.println("Middleware started, connected to all three server.");
 
 
@@ -122,7 +122,7 @@ public class RMIMiddleware implements IResourceManager
      */
     public boolean addFlight(int flightNum, int flightSeats, int flightPrice) throws RemoteException {
         m_Flights_available.merge(flightNum, flightSeats, Integer::sum);
-		return flightRM.addFlight(flightNum, flightSeats, flightPrice);
+		return this.flightRM.addFlight(flightNum, flightSeats, flightPrice);
 	}
     
     /**
@@ -135,7 +135,7 @@ public class RMIMiddleware implements IResourceManager
      */
     public boolean addCars(String location, int numCars, int price) throws RemoteException {
         m_Cars_available.merge(location, numCars, Integer::sum);
-		return carRM.addCars(location, numCars, price);
+		return this.carRM.addCars(location, numCars, price);
 	}
    
     /**
@@ -148,7 +148,7 @@ public class RMIMiddleware implements IResourceManager
      */
     public boolean addRooms(String location, int numRooms, int price) throws RemoteException {
         m_Rooms_available.merge(location, numRooms, Integer::sum);
-		return roomRM.addRooms(location, numRooms, price);
+		return this.roomRM.addRooms(location, numRooms, price);
 	}
 			    
     /**
@@ -181,7 +181,7 @@ public class RMIMiddleware implements IResourceManager
         if (customerManager.isFlightReserved(flightNum)){
                 return false;
         }
-        return flightRM.deleteFlight(flightNum);
+        return this.flightRM.deleteFlight(flightNum);
     }
     
     /**
@@ -195,7 +195,7 @@ public class RMIMiddleware implements IResourceManager
         if (customerManager.isCarReserved(location)){
             return false;
         }
-        return carRM.deleteCars(location);
+        return this.carRM.deleteCars(location);
     }
 
     /**
@@ -209,7 +209,7 @@ public class RMIMiddleware implements IResourceManager
         if (customerManager.isRoomReserved(location)){
             return false;
         }
-        return roomRM.deleteRooms(location);
+        return this.roomRM.deleteRooms(location);
     }
     
     /**
@@ -349,7 +349,7 @@ public class RMIMiddleware implements IResourceManager
      * @return Price of a seat in this flight
      */
     public int queryFlightPrice(int flightNumber) throws RemoteException {
-		return flightRM.queryFlightPrice(flightNumber);
+		return this.flightRM.queryFlightPrice(flightNumber);
 	  }
 
     /**
@@ -358,7 +358,7 @@ public class RMIMiddleware implements IResourceManager
      * @return Price of car
      */
     public int queryCarsPrice(String location) throws RemoteException {
-        return carRM.queryCarsPrice(location);
+        return this.carRM.queryCarsPrice(location);
     }
 
     /**
@@ -367,7 +367,7 @@ public class RMIMiddleware implements IResourceManager
      * @return Price of a room
      */
     public int queryRoomsPrice(String location) throws RemoteException {
-        return roomRM.queryRoomsPrice(location);
+        return this.roomRM.queryRoomsPrice(location);
     }
 
     /**

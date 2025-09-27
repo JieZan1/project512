@@ -108,6 +108,9 @@ public class RMIMiddleware implements IResourceManager
 
     public RMIMiddleware (){
         customerManager = CustomerManager.getInstance();
+        m_Flights_available = new HashMap<>();
+        m_Cars_available = new HashMap<>();
+        m_Rooms_available = new HashMap<>();
     }
 
 	/**

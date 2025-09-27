@@ -433,7 +433,7 @@ public class RMIMiddleware implements IResourceManager
         System.out.println("DEBUG: reserveFlight called - Customer: " + customerID + ", Flight: " + flightNumber);
         Integer seat = m_Flights_available.get(flightNumber);
 
-        if (seat != null && seat > 1) {
+        if (seat != null && seat > 0) {
             m_Flights_available.merge(flightNumber, -1, Integer::sum);
             customerManager.reserveFlight(customerID, flightNumber);
             System.out.println("DEBUG: reserveFlight successful, remaining seats: " + m_Flights_available.get(flightNumber));
@@ -454,7 +454,7 @@ public class RMIMiddleware implements IResourceManager
         System.out.println("DEBUG: reserveCar called - Customer: " + customerID + ", Location: " + location);
         Integer seat = m_Cars_available.get(location);
 
-        if (seat != null && seat > 1) {
+        if (seat != null && seat > 0) {
             m_Cars_available.merge(location, -1, Integer::sum);
             customerManager.reserveCar(customerID, location);
             System.out.println("DEBUG: reserveCar successful, remaining cars: " + m_Cars_available.get(location));
@@ -475,7 +475,7 @@ public class RMIMiddleware implements IResourceManager
         System.out.println("DEBUG: reserveRoom called - Customer: " + customerID + ", Location: " + location);
         Integer seat = m_Rooms_available.get(location);
 
-        if (seat != null && seat > 1) {
+        if (seat != null && seat > 0) {
             m_Rooms_available.merge(location, -1, Integer::sum);
             customerManager.reserveRoom(customerID, location);
             System.out.println("DEBUG: reserveRoom successful, remaining rooms: " + m_Rooms_available.get(location));

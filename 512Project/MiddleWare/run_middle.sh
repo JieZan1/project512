@@ -8,4 +8,4 @@ echo '  $3 - server name of Flights'
 #adjust port number if necessary
 rmiregistry -J-Djava.rmi.server.useCodebaseOnly=false 1045
 
-java -Djava.rmi.server.codebase=file:$(pwd)/ MiddleWare.RMI.RMIMiddleware $1 $2 $3
+java -cp ../Server/RMIInterface.jar -Djava.rmi.server.codebase=file:$(pwd)/ MiddleWare.RMI.RMIMiddleware $1 $2 $3

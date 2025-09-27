@@ -206,6 +206,9 @@ public class RMIMiddleware implements IResourceManager
         }
         boolean result = this.flightRM.deleteFlight(flightNum);
         System.out.println("DEBUG: deleteFlight result: " + result);
+        if (result) {
+            m_Flights_available.remove(flightNum);
+        }
         return result;
     }
 
@@ -224,6 +227,9 @@ public class RMIMiddleware implements IResourceManager
         }
         boolean result = this.carRM.deleteCars(location);
         System.out.println("DEBUG: deleteCars result: " + result);
+        if(result){
+            m_Cars_available.remove(location);
+        }
         return result;
     }
 
@@ -242,6 +248,9 @@ public class RMIMiddleware implements IResourceManager
         }
         boolean result = this.roomRM.deleteRooms(location);
         System.out.println("DEBUG: deleteRooms result: " + result);
+        if (result) {
+            m_Rooms_available.remove(location);
+        }
         return result;
     }
 

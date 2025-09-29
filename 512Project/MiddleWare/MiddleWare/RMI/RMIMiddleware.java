@@ -5,6 +5,7 @@
 
 package MiddleWare.RMI;
 
+import MiddleWare.Common.Customer;
 import MiddleWare.Customers.CustomerManager;
 import Server.Interface.*;
 
@@ -505,6 +506,13 @@ public class RMIMiddleware implements IResourceManager
         System.out.println("DEBUG: bundle called - Customer: " + customerID + ", Flights: " + flightNumbers
                 + ", Location: " + location + ", Car: " + car + ", Room: " + room);
         
+        // Check is the customer is valid
+        if(customerManager.getCustomer(customerID) == null){
+            System.out.println("DEBUG: bundle failed - customer does not exist");
+            return false;
+        }
+        
+
         // Check if all requested items are available
         for (String flightNumber : flightNumbers) {
             int flightNumberInt = Integer.parseInt(flightNumber);
